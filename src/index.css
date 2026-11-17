@@ -1,0 +1,95 @@
+/* STYLES FOR THE WHOLE SITE
+   We use Tailwind CSS. Instead of writing CSS rules by hand, we put short
+   class names right in the HTML, like "mt-4" (margin on top) or "text-center".
+   This file does three things:
+   1. Loads Tailwind.
+   2. Defines our brand colors and fonts (the @theme block).
+   3. Defines a few reusable classes (.btn, .card, ...) so we do not repeat long lists. */
+
+@import "tailwindcss";
+
+/* BRAND COLORS AND FONTS
+   Tailwind turns each of these into classes. For example --color-clay
+   gives us bg-clay, text-clay and border-clay. */
+@theme {
+  --color-paper: #fbf7f0; /* page background */
+  --color-sand: #efe9dc;
+  --color-stone: #e4dccb;
+  --color-line: #d9d2c3; /* thin borders */
+  --color-ink: #1f2a33; /* main text */
+  --color-muted: #5b6670; /* softer text */
+  --color-clay: #b4452e; /* main brand color (terracotta) */
+  --color-clay-dark: #963624; /* clay when hovered */
+  --color-clay-tint: #f6e1da;
+  --color-teal: #1f6f6b; /* second brand color */
+  --color-teal-dark: #14504d;
+  --color-teal-tint: #dceBe8;
+  --font-display: "Fraunces", Georgia, serif; /* headings */
+  --font-sans: "Inter", system-ui, sans-serif; /* body text */
+}
+
+/* BASE STYLES: apply to plain HTML tags */
+@layer base {
+  body {
+    @apply bg-paper font-sans text-ink antialiased;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-display font-bold;
+  }
+  a {
+    @apply text-clay;
+  }
+  /* A clear outline when someone uses the keyboard (Tab key) */
+  :focus-visible {
+    outline: 3px solid var(--color-teal);
+    outline-offset: 2px;
+  }
+}
+
+/* REUSABLE CLASSES: @apply means "use these Tailwind classes" */
+@layer components {
+  .btn {
+    @apply inline-flex h-11 items-center justify-center rounded-md px-5 text-sm font-semibold no-underline;
+  }
+  .btn-primary {
+    @apply bg-clay text-white hover:bg-clay-dark;
+  }
+  .btn-secondary {
+    @apply border border-ink bg-transparent text-ink hover:bg-ink hover:text-white;
+  }
+  .btn-light {
+    @apply bg-white text-teal-dark hover:bg-teal-tint;
+  }
+  .field-label {
+    @apply mb-1 block text-sm font-semibold;
+  }
+  .field-input {
+    @apply h-11 w-full rounded-md border border-[#8a8068] bg-white px-3 text-base;
+  }
+  .field-input[aria-invalid="true"] {
+    @apply border-clay;
+  }
+  .field-error {
+    @apply mt-1 text-sm text-[#a33a25];
+  }
+  .page-wrap {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+  }
+  .card {
+    @apply rounded-lg border border-line bg-white;
+  }
+  .tag {
+    @apply inline-block rounded bg-teal-tint px-2 py-0.5 text-xs font-semibold text-teal-dark;
+  }
+}
+
+/* If a visitor asked their device to reduce motion, turn off all animation */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
